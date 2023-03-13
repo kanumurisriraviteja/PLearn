@@ -1,0 +1,4 @@
+python --version
+py --version
+py -m pip --version
+python.exe -m pip install --upgrade pip
