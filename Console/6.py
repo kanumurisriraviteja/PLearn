@@ -1,4 +1,4 @@
-# ErrorHandling, Iterator
+# ErrorHandling, Iterator,enumerator,zip,chuncks
 
 import pandas as pd
 # Define shout_echo
