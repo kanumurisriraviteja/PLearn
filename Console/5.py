@@ -1,9 +1,13 @@
-#fuctions local/global/nonlocal variables,inner,function pointer,*args,**kwargs,lamba - map,filter,reduce,
-#functions variables local and global###################################################
-num =5
+# fuctions local/global/nonlocal variables,inner,function pointer,*args,**kwargs,lamba - map,filter,reduce,
+# functions variables local and global###################################################
+from functools import reduce
+num = 5
+
+
 def func1():
     num = 3
     print(num)
+
 
 def func2():
     global num
@@ -12,12 +16,15 @@ def func2():
     print(num)
     print(double_num)
 
+
 func1()
 func2()
 print(num)
 
-#Inner functions###################################################
+# Inner functions###################################################
 # Define three_shouts
+
+
 def three_shouts(word1, word2, word3):
     """Returns a tuple of strings
     concatenated with '!!!'."""
@@ -30,12 +37,12 @@ def three_shouts(word1, word2, word3):
     # Return a tuple of strings
     return (inner(word1), inner(word2), inner(word3))
 
+
 # Call three_shouts() and print
 print(three_shouts('a', 'b', 'c'))
 
 
-
-#functional pointer###################################################
+# functional pointer###################################################
 # Define echo
 def echo(n):
     """Return the inner_echo function."""
@@ -49,6 +56,7 @@ def echo(n):
     # Return inner_echo
     return inner_echo
 
+
 # Call echo: twice
 twice = echo(2)
 
@@ -58,36 +66,41 @@ thrice = echo(3)
 # Call twice() and thrice() then print
 print(twice('hello'), thrice('hello'))
 
-#nonlocal scope###################################################
+# nonlocal scope###################################################
 # Define echo_shout()
+
+
 def echo_shout(word):
     """Change the value of a nonlocal variable"""
-    
+
     # Concatenate word with itself: echo_word
     echo_word = word * 2
-    
-    # Print echo_word
-    print(echo_word)
-    
-    # Define inner function shout()
-    def shout():
-        """Alter a variable in the enclosing scope"""    
-        # Use echo_word in nonlocal scope
-        nonlocal echo_word
-        
-        # Change echo_word to echo_word concatenated with '!!!'
-        echo_word = echo_word + '!!!'
-    
-    # Call function shout()
-    shout()
-    
+
     # Print echo_word
     print(echo_word)
 
+    # Define inner function shout()
+    def shout():
+        """Alter a variable in the enclosing scope"""
+        # Use echo_word in nonlocal scope
+        nonlocal echo_word
+
+        # Change echo_word to echo_word concatenated with '!!!'
+        echo_word = echo_word + '!!!'
+
+    # Call function shout()
+    shout()
+
+    # Print echo_word
+    print(echo_word)
+
+
 # Call function echo_shout() with argument 'hello'
 echo_shout('hello')
-#*args###################################################
+# *args###################################################
 # Define gibberish
+
+
 def gibberish(*args):
     """Concatenate strings in *args together."""
 
@@ -101,6 +114,7 @@ def gibberish(*args):
     # Return hodgepodge
     return hodgepodge
 
+
 # Call gibberish() with one string: one_word
 one_word = gibberish('luke')
 
@@ -111,8 +125,10 @@ many_words = gibberish("luke", "leia", "han", "obi", "darth")
 print(one_word)
 print(many_words)
 
-#**kwargs###################################################
+# **kwargs###################################################
 # Define report_status
+
+
 def report_status(**kwargs):
     """Print out the status of a movie character."""
 
@@ -125,6 +141,7 @@ def report_status(**kwargs):
 
     print("\nEND REPORT")
 
+
 # First call to report_status()
 report_status(name='luke', affiliation='jedi', status='missing')
 
@@ -132,12 +149,13 @@ report_status(name='luke', affiliation='jedi', status='missing')
 report_status(name='anakin', affiliation='sith lord', status='deceased')
 
 
-#lambda###################################################
+# lambda###################################################
 # Define echo_word as a lambda function: echo_word
-echo_word = lambda word1,echo : word1 * echo
+def echo_word(word1, echo): return word1 * echo
+
 
 # Call echo_word: result
-result = echo_word('hey',5)
+result = echo_word('hey', 5)
 
 # Print result
 print(result)
@@ -146,7 +164,7 @@ nums = [2, 4, 6, 8, 10]
 result = map(lambda a: a ** 2, nums)
 
 
-#lambda - map###################################################
+# lambda - map###################################################
 # Create a list of strings: spells
 spells = ["protego", "accio", "expecto patronum", "legilimens"]
 
@@ -159,12 +177,13 @@ shout_spells_list = list(shout_spells)
 # Print the result
 print(shout_spells_list)
 
-#lambda -filter###################################################
+# lambda -filter###################################################
 # Create a list of strings: fellowship
-fellowship = ['frodo', 'samwise', 'merry', 'pippin', 'aragorn', 'boromir', 'legolas', 'gimli', 'gandalf']
+fellowship = ['frodo', 'samwise', 'merry', 'pippin',
+              'aragorn', 'boromir', 'legolas', 'gimli', 'gandalf']
 
 # Use filter() to apply a lambda function over fellowship: result
-result = filter(lambda a:len(a)>6, fellowship)
+result = filter(lambda a: len(a) > 6, fellowship)
 
 # Convert result to a list: result_list
 result_list = list(result)
@@ -173,15 +192,14 @@ result_list = list(result)
 print(result_list)
 
 
-#lambda - reduce###################################################
+# lambda - reduce###################################################
 # Import reduce from functools
-from functools import reduce
 
 # Create a list of strings: stark
 stark = ['robb', 'sansa', 'arya', 'brandon', 'rickon']
 
 # Use reduce() to apply a lambda function over stark: result
-result = reduce(lambda item1,item2: item1+item2, stark)
+result = reduce(lambda item1, item2: item1+item2, stark)
 
 # Print the result
 print(result)

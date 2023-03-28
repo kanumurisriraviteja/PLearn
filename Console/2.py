@@ -1,22 +1,23 @@
+import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-x= [100,200,300]
-y = [4,2,3]
-plt.plot(x,y)
+x = [100, 200, 300]
+y = [4, 2, 3]
+plt.plot(x, y)
 plt.xlabel('x axis')
 plt.ylabel('y axis')
 plt.title('Test Plot')
-plt.xticks([100,200,300], ["1h","2h","3h"]) 
-plt.yticks([4,2,3], ["four","two","three"]) 
+plt.xticks([100, 200, 300], ["1h", "2h", "3h"])
+plt.yticks([4, 2, 3], ["four", "two", "three"])
 plt.text(1550, 71, 'India')
-z= np.array(y) * 20
-plt.scatter(x, y, s = z)
+z = np.array(y) * 20
+plt.scatter(x, y, s=z)
 plt.show()
-plt.clf() #cleans it up again so you can start afresh.
+plt.clf()  # cleans it up again so you can start afresh.
 # plt.scatter(x,y)
 # plt.xscale('log') # TO show in the log format
 plt.hist(y)
-plt.hist(y,bins=5)
+plt.hist(y, bins=5)
 plt.show()
 #################################################################
 # Definition of countries and capital
@@ -27,9 +28,10 @@ ind_ger = countries.index('germany')
 # Use ind_ger to print out capital of Germany
 print(capitals[ind_ger])
 # Definition of dictionary
-europe = {'spain':'madrid', 'france':'paris', 'germany':'berlin', 'norway':'oslo' ,'c':'d'}
-europe['spain'] = 'b' # updates the dictionary
-europe['italy'] = 'rome' # updates the dictionary
+europe = {'spain': 'madrid', 'france': 'paris',
+          'germany': 'berlin', 'norway': 'oslo', 'c': 'd'}
+europe['spain'] = 'b'  # updates the dictionary
+europe['italy'] = 'rome'  # updates the dictionary
 del europe['c']
 print('italy' in europe)
 # Print out the keys in europe
@@ -38,17 +40,17 @@ print(europe.keys())
 print(europe['norway'])
 
 # Dictionary of dictionaries
-europe = { 'spain': { 'capital':'madrid', 'population':46.77 },
-           'france': { 'capital':'paris', 'population':66.03 },
-           'germany': { 'capital':'berlin', 'population':80.62 },
-           'norway': { 'capital':'oslo', 'population':5.084 } }
+europe = {'spain': {'capital': 'madrid', 'population': 46.77},
+          'france': {'capital': 'paris', 'population': 66.03},
+          'germany': {'capital': 'berlin', 'population': 80.62},
+          'norway': {'capital': 'oslo', 'population': 5.084}}
 
 
 # Print out the capital of France
 europe['france']['capital']
 
 # Create sub-dictionary data
-data = {'capital':'rome', 'population':59.83}
+data = {'capital': 'rome', 'population': 59.83}
 
 # Add data to europe under key 'italy'
 europe['italy'] = data
@@ -56,13 +58,13 @@ europe['italy'] = data
 # Print europe
 print(europe)
 
-import pandas as pd
 
 # Build cars DataFrame
-names = ['United States', 'Australia', 'Japan', 'India', 'Russia', 'Morocco', 'Egypt']
-dr =  [True, False, False, False, True, True, True]
+names = ['United States', 'Australia', 'Japan',
+         'India', 'Russia', 'Morocco', 'Egypt']
+dr = [True, False, False, False, True, True, True]
 cpc = [809, 731, 588, 18, 200, 70, 45]
-cars_dict = { 'country':names, 'drives_right':dr, 'cars_per_cap':cpc }
+cars_dict = {'country': names, 'drives_right': dr, 'cars_per_cap': cpc}
 cars = pd.DataFrame(cars_dict)
 print(cars)
 
@@ -76,14 +78,14 @@ cars.index = row_labels
 print(cars)
 
 cars = pd.read_csv('cars.csv')
-cars = pd.read_csv('cars.csv',index_col=0)
+cars = pd.read_csv('cars.csv', index_col=0)
 print(cars)
 # Print out country column as Pandas Series
 print(cars['country'])
 # Print out country column as Pandas DataFrame
 print(cars[['country']])
 # Print out DataFrame with country and drives_right columns
-print(cars[['country','drives_right']])
+print(cars[['country', 'drives_right']])
 
 # Square brackets can do more than just selecting columns. You can also use them to get rows, or observations, from a DataFrame. The following call selects the first five rows from the cars DataFrame:
 # cars[0:5]
@@ -94,21 +96,21 @@ print(cars[['country','drives_right']])
 print(cars.loc['JPN'])
 
 # Print out observations for Australia and Egypt - This is like a data frame
-print(cars.loc[['AUS','EG']])
+print(cars.loc[['AUS', 'EG']])
 # Print out drives_right value of Morocco
-print(cars.loc['MOR','drives_right'])
+print(cars.loc['MOR', 'drives_right'])
 
 # Print sub-DataFrame
-print(cars.loc[['RU','MOR'],['country','drives_right']])
+print(cars.loc[['RU', 'MOR'], ['country', 'drives_right']])
 
 # Print out drives_right column as Series
-print(cars.loc[:,'drives_right'])
+print(cars.loc[:, 'drives_right'])
 
 # Print out drives_right column as DataFrame
-print(cars.loc[:,['drives_right']])
+print(cars.loc[:, ['drives_right']])
 
 # Print out cars_per_cap and drives_right as DataFrame
-print(cars.loc[:,['cars_per_cap','drives_right']])
+print(cars.loc[:, ['cars_per_cap', 'drives_right']])
 
 # Extract drives_right column as Series: dr
 dr = cars['drives_right']
@@ -123,7 +125,7 @@ print(sel)
 
 # Create medium: observations with cars_per_cap between 100 and 500
 cpc = cars['cars_per_cap']
-between  = np.logical_and(cpc>100,cpc<500)
+between = np.logical_and(cpc > 100, cpc < 500)
 medium = cars[between]
 
 
