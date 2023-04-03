@@ -1,2 +1,4 @@
 1. type Conversion,list,numpy,statistics(mean,median,mode,sd,..)
 2. data visualization (matplotlib)- plot,scatter,hist, dictionaries, pandas (data series/frames- loc, iloc)
+3. ==, and,or,not, logical_and,logical_or,if-elif-else,while,for
+   list looping,dictionary looping(items), numpy array looping (nditer), DataFrames looping(iterrows), apply in data frames
