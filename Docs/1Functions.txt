@@ -1,0 +1,14 @@
+print() -> to print the data
+type()  -> to know the data type
+str()   -> convert to string type  int(), float() and bool()
+
+l = ['a','bes','c','d']
+max(l)
+len(l) len(l[0])
+round(1.68,1) -> 1.7 round(1.68) -> 2
+pow(base, exp, mod=None)
+help(pow)
+==========================================================
+import math as m
+import numpy as np
+import pandas as pd

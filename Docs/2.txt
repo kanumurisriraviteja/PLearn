@@ -1,0 +1,27 @@
+Data Types:
+float   -> Real nos
+int     -> integer nos
+str     -> string,txt
+bool    -> True,False
+
+List:
+l = ['a','b','c','d']
+list index starts at 0
+want to get the last element -1
+l[1:3] -> Selects the elements at index 1,2. Here the last element is not included
+l[:3]  -> start at index 0
+l[3:]  -> from index 3 to all the elements
+l[0]=['e']    -> updates the list
+l[0:2]=['f','g']  -> updates the elements at 0,1
+l+ ['h','i']
+del(l[1]) -> deletes an element at 1 position
+
+l2 =l1 here only the address is copied, if we change the elements in l2 then l1 is changed and viceversa
+l2 = list(l1) new copy of memory
+l2 = l1[:] new copy of memorysorted(full,reverse=True) -> sorts a list in descending order
+l.index('bes')
+l.count('c')
+l.append(e')
+l.reverse()
+
+numpy arrays should contain only one data type
