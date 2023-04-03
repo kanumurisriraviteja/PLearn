@@ -1,6 +1,7 @@
 # fuctions local/global/nonlocal variables,inner,function pointer,*args,**kwargs,lamba - map,filter,reduce,
-# functions variables local and global###################################################
 from functools import reduce
+
+# functions variables local and global###################################################
 num = 5
 
 
@@ -97,6 +98,7 @@ def echo_shout(word):
 
 # Call function echo_shout() with argument 'hello'
 echo_shout('hello')
+
 # *args###################################################
 # Define gibberish
 

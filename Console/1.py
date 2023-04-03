@@ -2,6 +2,7 @@ import numpy as np
 print('Hello World')
 
 # Type Conversion##########################################################################################
+
 # Definition of savings and result
 savings = 100
 result = 100 * 1.10 ** 7
@@ -12,7 +13,9 @@ print("I started with $" + str(savings) +
 pi_string = "3.1415926"
 # Convert pi_string into float: pi_float
 pi_float = float(pi_string)
+
 # List##########################################################################################
+
 # area variables (in square meters)
 hall = 11.25
 kit = 18.0
@@ -32,6 +35,7 @@ print(house)
 print(type(house))
 print(house[0])
 print(house[-1])
+
 # deleting an element in the list############################################################
 
 areas = ["hallway", 11.25, "kitchen", 18.0,
@@ -59,13 +63,17 @@ full = first + second
 full_sorted = sorted(full, reverse=True)
 # Print out full_sorted
 print(full_sorted)
+
 # Numpy###########################################################################################
+
 baseball = [180, 215, 210, 210, 188, 176, 209, 200]
 np_baseball = np.array(baseball)
 print(type(baseball))  # <class 'list'>
 print(type(np_baseball))  # <class 'numpy.ndarray'>
 print(np_baseball)  # [180, 215, 210, 210, 188, 176, 209, 200]
+
 # Numpy-Implementation##############################################################################
+
 x = [1, 2, 3]
 # y = x**2 # This is a Error
 y = x*2
@@ -84,7 +92,9 @@ print(y > 5)  # [False  True  True False False]
 print(y[high])  # [9 6]
 print(np.array([True, 1, 2]) + np.array([3, 4, False]))  # [4 5 2]
 print(np.array([4, 3, 0]) + np.array([0, 2, 2]))  # [4 5 2]
+
 # BMI calculation using numpy################################################################
+
 height_in = [100, 200, 300]
 # Create a numpy array from height_in: np_height_in
 np_height_in = np.array(height_in)
@@ -109,7 +119,9 @@ print(light)  # [False False  True]
 # Print out BMIs of all baseball players whose BMI is below 21
 print(bmi[light])  # [0.05468314]
 print(np_height_in[1:3])  # [200 300] this is the subset
+
 # ############################################################################################
+
 # Create baseball, a list of lists
 baseball = [[180, 78.4],
             [215, 102.7],
@@ -147,7 +159,9 @@ print(np_baseball[1:3, :])
 print(np_baseball[1:3, 0:1])
 # [[215.]
 #  [210.]]
+
 # Mean,Median,standard deviation,corelation,###########################################################
+
 np_mat = np.array([[1, 2, 11],
                    [3, 4, 12],
                    [5, 6, 13]])
@@ -184,7 +198,9 @@ print(np.sum(x))  # 35
 print(np.sort(x))  # [ 1  4  8 10 12]
 data = np.round(np.random.normal(10, 100, 10), 2)
 print(data)  # it generates random 10 gaussian no, and rounds each no to 2 decimals
+
 ############################################################################################
+
 positions = ['GK', 'M', 'A', 'D']
 heights = [191, 184, 185, 180]
 

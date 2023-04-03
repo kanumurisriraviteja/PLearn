@@ -1,0 +1,2 @@
+1. type Conversion,list,numpy,statistics(mean,median,mode,sd,..)
+2. data visualization (matplotlib)- plot,scatter,hist, dictionaries, pandas (data series/frames- loc, iloc)

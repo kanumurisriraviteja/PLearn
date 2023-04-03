@@ -11,4 +11,6 @@ help(pow)
 ==========================================================
 import math as m
 import numpy as np
+import matplotlib.pyplot as plt
 import pandas as pd
+import scipy.stats as st
