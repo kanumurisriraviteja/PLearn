@@ -1,6 +1,7 @@
 print() -> to print the data
 type()  -> to know the data type
 str()   -> convert to string type  int(), float() and bool()
+list()  -> converts to list type
 
 l = ['a','bes','c','d']
 max(l)
@@ -14,3 +15,4 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 import scipy.stats as st
+import functools as ft   >> this contains reduce

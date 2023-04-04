@@ -1,4 +1,4 @@
-# fuctions local/global/nonlocal variables,inner,function pointer,*args,**kwargs,lamba - map,filter,reduce,
+# fuctions local/global/nonlocal variables,inner,function pointer,*args,**kwargs,lamba - map,filter,reduce
 from functools import reduce
 
 # functions variables local and global###################################################
@@ -7,20 +7,20 @@ num = 5
 
 def func1():
     num = 3
-    print(num)
+    print(num)  # 3 local scope
 
 
 def func2():
     global num
     double_num = num * 2
     num = 6
-    print(num)
-    print(double_num)
+    print(num)  # 6
+    print(double_num)  # 10
 
 
 func1()
 func2()
-print(num)
+print(num)  # 6
 
 # Inner functions###################################################
 # Define three_shouts
@@ -40,7 +40,7 @@ def three_shouts(word1, word2, word3):
 
 
 # Call three_shouts() and print
-print(three_shouts('a', 'b', 'c'))
+print(three_shouts('a', 'b', 'c'))  # ('a!!!', 'b!!!', 'c!!!')
 
 
 # functional pointer###################################################
@@ -65,7 +65,7 @@ twice = echo(2)
 thrice = echo(3)
 
 # Call twice() and thrice() then print
-print(twice('hello'), thrice('hello'))
+print(twice('hello'), thrice('hello'))  # hellohello hellohellohello
 
 # nonlocal scope###################################################
 # Define echo_shout()
@@ -76,9 +76,11 @@ def echo_shout(word):
 
     # Concatenate word with itself: echo_word
     echo_word = word * 2
+    v1 = 5
 
     # Print echo_word
-    print(echo_word)
+    print(echo_word)  # hellohello
+    print(v1)  # 5
 
     # Define inner function shout()
     def shout():
@@ -88,12 +90,16 @@ def echo_shout(word):
 
         # Change echo_word to echo_word concatenated with '!!!'
         echo_word = echo_word + '!!!'
+        print(echo_word)  # hellohello!!!
+        v1 = 6
+        print(v1)  # 6
 
     # Call function shout()
     shout()
 
     # Print echo_word
-    print(echo_word)
+    print(echo_word)  # hellohello!!!
+    print(v1)  # 5
 
 
 # Call function echo_shout() with argument 'hello'
@@ -124,8 +130,8 @@ one_word = gibberish('luke')
 many_words = gibberish("luke", "leia", "han", "obi", "darth")
 
 # Print one_word and many_words
-print(one_word)
-print(many_words)
+print(one_word)  # luke
+print(many_words)  # lukeleiahanobidarth
 
 # **kwargs###################################################
 # Define report_status
@@ -146,25 +152,34 @@ def report_status(**kwargs):
 
 # First call to report_status()
 report_status(name='luke', affiliation='jedi', status='missing')
+# name: luke
+# affiliation: jedi
+# status: missing
 
 # Second call to report_status()
 report_status(name='anakin', affiliation='sith lord', status='deceased')
-
+# name: anakin
+# affiliation: sith lord
+# status: deceased
 
 # lambda###################################################
-# Define echo_word as a lambda function: echo_word
+
+
 def echo_word(word1, echo): return word1 * echo
+# Define echo_word as a lambda function: echo_word
+# #echo_word = lambda word1, echo: word1 * echo
 
 
 # Call echo_word: result
 result = echo_word('hey', 5)
 
 # Print result
-print(result)
+print(result)  # heyheyheyheyhey
 
 nums = [2, 4, 6, 8, 10]
 result = map(lambda a: a ** 2, nums)
-
+print(nums)  # [2, 4, 6, 8, 10]
+print(list(result))
 
 # lambda - map###################################################
 # Create a list of strings: spells
@@ -177,6 +192,7 @@ shout_spells = map(lambda a: a + '!!!', spells)
 shout_spells_list = list(shout_spells)
 
 # Print the result
+# ['protego!!!', 'accio!!!', 'expecto patronum!!!', 'legilimens!!!']
 print(shout_spells_list)
 
 # lambda -filter###################################################
@@ -191,12 +207,10 @@ result = filter(lambda a: len(a) > 6, fellowship)
 result_list = list(result)
 
 # Print result_list
-print(result_list)
+print(result_list)  # ['samwise', 'aragorn', 'boromir', 'legolas', 'gandalf']
 
 
 # lambda - reduce###################################################
-# Import reduce from functools
-
 # Create a list of strings: stark
 stark = ['robb', 'sansa', 'arya', 'brandon', 'rickon']
 
@@ -204,4 +218,4 @@ stark = ['robb', 'sansa', 'arya', 'brandon', 'rickon']
 result = reduce(lambda item1, item2: item1+item2, stark)
 
 # Print the result
-print(result)
+print(result)  # robbsansaaryabrandonrickon

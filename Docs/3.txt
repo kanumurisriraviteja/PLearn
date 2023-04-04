@@ -1,1 +1,4 @@
 Doc strings: """
+While accessing the function variable first local scope >  Enclosing functions > global scope > built in scope (LEGB rule)
+lambda a: a + '!!!', spells     before : input argument  after : return value
+array with map ,filter
