@@ -39,3 +39,8 @@ whereas DataFrames are two-dimensional and represent a table of data with multip
 >> loc,iloc to get the rows in the data series and Data frame
 
 Generate random nos and random walk and the scenario of climibing a bilding
+
+
+looping..
+  range() enumerate() > index,value , numpy array looping (nditer), DataFrames looping(iterrows)
+  iter .. next(), zip
