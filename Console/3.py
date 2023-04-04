@@ -125,3 +125,14 @@ print(cars)
 # This is without the for loop
 cars["COUNTRY"] = cars["country"].apply(str.upper)
 print(cars)
+
+
+## Random nos#################################################################################
+# Set the seed
+np.random.seed(123)
+
+# Generate and print random float
+print(np.random.rand())
+
+# Generate and print random from 1,2,3,4,5,6
+print(np.random.randint(1, 7))

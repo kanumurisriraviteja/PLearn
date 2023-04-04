@@ -191,13 +191,6 @@ print(medium)
 
 # loc is for labels and iloc is for index
 
-# Set the seed
-np.random.seed(123)
-
-# Generate and print random float
-print(np.random.rand())
-
-
 # Data ##
 #         cars_per_cap      country       drives_right
 # US            809   United States         True
