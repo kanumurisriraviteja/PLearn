@@ -37,3 +37,5 @@ whereas DataFrames are two-dimensional and represent a table of data with multip
 >> How do we select the columns in data series and data frame
 >> How do we select the rows in data series and data frame
 >> loc,iloc to get the rows in the data series and Data frame
+
+Generate random nos and random walk and the scenario of climibing a bilding

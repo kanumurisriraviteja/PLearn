@@ -107,10 +107,10 @@ print(cars)
 
 # Build cars series/DataFrame from csv file #################################################################
 
-cars = pd.read_csv('cars.csv')
+cars = pd.read_csv('datasets/cars.csv')
 print(cars)
 # set it to 0, so that the first column is used as row labels.
-cars = pd.read_csv('cars.csv', index_col=0)
+cars = pd.read_csv('datasets/cars.csv', index_col=0)
 print(cars)
 
 

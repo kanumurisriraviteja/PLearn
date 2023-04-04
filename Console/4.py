@@ -1,15 +1,17 @@
 import pandas as pd
 
+# Function call##########################################################################################
+
 
 def Square(value=5):
     new_value = value ** 2
     print(new_value)
 
 
-Square(10)
-Square()
+Square(10)  # 100
+Square()  # 25
 
-# Define shout with the parameter, word
+# Define shout with the parameter, word#############################################################
 
 
 def shout(word):
@@ -25,10 +27,10 @@ def shout(word):
 yell = shout('congratulations')
 
 # Print yell
-print(yell)
+print(yell)  # congratulations!!!
 
 
-# Define shout with parameters word1 and word2
+# Define shout with parameters word1 and word2########################################
 def shout(word1, word2):
     """Concatenate strings with three exclamation marks"""
     # Concatenate word1 with '!!!': shout1
@@ -48,9 +50,9 @@ def shout(word1, word2):
 yell = shout('congratulations', 'you')
 
 # Print yell
-print(yell)
+print(yell)  # congratulations!!!you!!!
 
-# Define shout_all with parameters word1 and word2
+# Define shout_all with parameters word1 and word2########################################
 
 
 def shout_all(word1, word2):
@@ -72,13 +74,11 @@ def shout_all(word1, word2):
 yell1, yell2 = shout_all('congratulations', 'you')
 
 # Print yell1 and yell2
-print(yell1)
-print(yell2)
+print(yell1)  # congratulations!!!
+print(yell2)  # you!!!
 
-# Import pandas
-
-# Import Twitter data as DataFrame: df
-df = pd.read_csv('tweets.csv')
+# Getting the lang tweet########################################
+df = pd.read_csv('datasets/tweets.csv')
 
 # Initialize an empty dictionary: langs_count
 langs_count = {}
@@ -100,9 +100,9 @@ for entry in col:
 print(langs_count)
 
 
-# Define count_entries()
+# Getting the lang tweet by dynamically passing the column name########################################
 def count_entries(df, col_name):
-    """Return a dictionary with counts of 
+    """Return a dictionary with counts of
     occurrences as value for each key."""
 
     # Initialize an empty dictionary: langs_count
@@ -126,7 +126,8 @@ def count_entries(df, col_name):
 
 
 # Call count_entries(): result
-result = count_entries('tweets_df', 'lang')
+df = pd.read_csv('datasets/tweets.csv')
+result = count_entries(df, 'lang')
 
 # Print the result
 print(result)
