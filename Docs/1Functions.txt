@@ -2,6 +2,7 @@ print() -> to print the data
 type()  -> to know the data type
 str()   -> convert to string type  int(), float() and bool()
 list()  -> converts to list type
+dict()
 
 l = ['a','bes','c','d']
 max(l)
