@@ -1,46 +1,43 @@
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.CognitiveServices.Speech;
 
-[Route("api/[controller]")]
-[ApiController]
-public class AudioToTextController : ControllerBase
+using System;
+using System.IO;
+using Azure.Storage.Blobs;
+
+public class BlobStorageUploader
 {
-    [HttpPost]
-    public async Task<IActionResult> PostAudioFile(IFormFile file)
-    {
-        if (file == null || file.Length == 0)
-        {
-            return BadRequest("Audio file is missing or empty.");
-        }
+    private readonly string connectionString; // Replace with your Azure Storage connection string
+    private readonly string containerName; // Replace with your Blob container name
 
+    public BlobStorageUploader(string connectionString, string containerName)
+    {
+        this.connectionString = connectionString;
+        this.containerName = containerName;
+    }
+
+    public async Task UploadTextFileToBlobStorage(string fileName, string content)
+    {
         try
         {
-            // Replace with your Speech-to-Text service endpoint and API key
-            var endpoint = "YOUR_SPEECH_TO_TEXT_ENDPOINT";
-            var apiKey = "YOUR_SPEECH_TO_TEXT_API_KEY";
+            // Create a BlobServiceClient using the connection string
+            var blobServiceClient = new BlobServiceClient(connectionString);
 
-            var config = SpeechConfig.FromEndpoint(new Uri(endpoint), apiKey);
-            using (var audioInput = AudioConfig.FromStreamInput(file.OpenReadStream()))
+            // Get a reference to the container
+            var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+
+            // Create a new text Blob in the container
+            var blobClient = containerClient.GetBlobClient(fileName);
+
+            // Convert the content to bytes and upload to the Blob
+            var contentBytes = Encoding.UTF8.GetBytes(content);
+            using (var stream = new MemoryStream(contentBytes))
             {
-                using (var recognizer = new SpeechRecognizer(config, audioInput))
-                {
-                    var result = await recognizer.RecognizeOnceAsync();
-
-                    if (result.Reason == ResultReason.RecognizedSpeech)
-                    {
-                        return Ok(result.Text);
-                    }
-                    else
-                    {
-                        return BadRequest("Speech recognition failed.");
-                    }
-                }
+                await blobClient.UploadAsync(stream);
             }
         }
         catch (Exception ex)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            // Handle any exceptions here
+            Console.WriteLine("Error uploading file: " + ex.Message);
         }
     }
 }
