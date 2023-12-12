@@ -1,4 +1,80 @@
+using System;
+using System.Data.SqlClient;
+using System.Text.RegularExpressions;
 
+class Program
+{
+    static void Main()
+    {
+        string connectionString = "your_connection_string_here";
+        string tableName = "your_table_name_here";
+        string columnName = "your_column_name_here";
+        
+        // Replace this with your actual SQL query to retrieve the data
+        string selectQuery = $"SELECT * FROM {tableName}";
+
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+
+            using (SqlCommand command = new SqlCommand(selectQuery, connection))
+            {
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        // Assuming the time column is a string in the format "(h:mm)"
+                        string oldTimeString = reader[columnName].ToString();
+
+                        // Use regular expression to extract hours and minutes
+                        Match match = Regex.Match(oldTimeString, @"\((\d+):(\d+)\)");
+
+                        if (match.Success)
+                        {
+                            // Parse hours and minutes from the matched groups
+                            int hours = int.Parse(match.Groups[1].Value);
+                            int minutes = int.Parse(match.Groups[2].Value);
+
+                            // Adjust hours: if 0, set to 23; otherwise, decrease by 1
+                            hours = (hours > 0) ? hours - 1 : 23;
+
+                            // Set minutes to 0
+                            minutes = 0;
+
+                            // Construct the updated time string
+                            string updatedTimeString = $"({hours:D2}:{minutes:D2})";
+
+                            // Construct conditions for the WHERE clause using your unique columns
+                            string whereClause = $"WHERE Column1 = '{reader["Column1"]}' AND Column2 = '{reader["Column2"]}'";
+
+                            // Replace the old time string in the original column value
+                            string newColumnValue = Regex.Replace(oldTimeString, @"\(\d+:\d+\)", updatedTimeString);
+
+                            // Update the table with the new value
+                            UpdateTable(connection, tableName, columnName, whereClause, newColumnValue);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    static void UpdateTable(SqlConnection connection, string tableName, string columnName, string whereClause, string newValue)
+    {
+        // Replace this with your actual SQL update statement
+        string updateQuery = $"UPDATE {tableName} SET {columnName} = @newValue {whereClause}";
+
+        using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection))
+        {
+            updateCommand.Parameters.AddWithValue("@newValue", newValue);
+
+            int rowsAffected = updateCommand.ExecuteNonQuery();
+
+            Console.WriteLine($"{rowsAffected} row(s) updated.");
+        }
+    }
+}
+==============================================================================================
 using System;
 using System.IO;
 using Azure.Storage.Blobs;
