@@ -1,4 +1,87 @@
 using System;
+using System.Text.RegularExpressions;
+
+
+using System;
+using System.Text.RegularExpressions;
+using System.Linq;
+
+class Program
+{
+    static void Main()
+    {
+        string inputString = "week=(2,5,1) day=(mo,we) time=(0:01)";
+
+        // Use regular expressions to extract week, days, and time
+        Match weekMatch = Regex.Match(inputString, @"week=\((.*?)\)");
+        Match dayMatch = Regex.Match(inputString, @"day=\((.*?)\)");
+        Match timeMatch = Regex.Match(inputString, @"time=\((\d+:\d+)\)");
+
+        if (weekMatch.Success && dayMatch.Success && timeMatch.Success)
+        {
+            // Extract values from matched groups
+            string originalWeek = weekMatch.Groups[1].Value;
+            string originalDays = dayMatch.Groups[1].Value;
+            string originalTime = timeMatch.Groups[1].Value;
+
+            // Update days (mo,we) to (su,tu)
+            string updatedDays = originalDays.Replace("mo", "su").Replace("we", "tu");
+
+            // Update time (0:01) to (23:01)
+            string updatedTime = "23:01";
+
+            // Construct the updated string
+            string updatedString = $"week=({originalWeek}) day=({updatedDays}) time=({updatedTime})";
+
+            Console.WriteLine($"Updated string: {updatedString}");
+        }
+        else
+        {
+            Console.WriteLine("Invalid input format. Unable to extract week, days, or time.");
+        }
+    }
+}
+
+=======
+class Program
+{
+    static void Main()
+    {
+        string inputString = "time=(s=7:00,f=12:00)";
+
+        // Use regular expression to extract start and end times
+        Match match = Regex.Match(inputString, @"time=\(s=(\d+:\d+),f=(\d+:\d+)\)");
+
+        if (match.Success)
+        {
+            // Parse start and end times from the matched groups
+            string startTime = match.Groups[1].Value;
+            string endTime = match.Groups[2].Value;
+
+            // Parse hours and minutes from the start time
+            int startHours = int.Parse(startTime.Split(':')[0]);
+            int startMinutes = int.Parse(startTime.Split(':')[1]);
+
+            // Decrease start hours by 1 (or set to 23 if already 0)
+            startHours = (startHours > 0) ? startHours - 1 : 23;
+
+            // Construct the updated start time
+            string updatedStartTime = $"{startHours:D2}:{startMinutes:D2}";
+
+            // Display the updated time
+            string updatedTime = $"time=(s={updatedStartTime},f={endTime})";
+            Console.WriteLine($"Updated string: {updatedTime}");
+        }
+        else
+        {
+            Console.WriteLine("Invalid input format. Unable to extract time.");
+        }
+    }
+}
+
+
+=================
+using System;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 
