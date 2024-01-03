@@ -1,5 +1,37 @@
-using System;
-using System.Text.RegularExpressions;
+<?xml version="1.0" encoding="utf-8" ?>
+<log4net>
+  <appender name="FileAppender" type="log4net.Appender.FileAppender">
+    <file value="log.txt" />
+    <appendToFile value="true" />
+    <layout type="log4net.Layout.PatternLayout">
+      <conversionPattern value="%date [%thread] %-5level %logger - %message%newline" />
+    </layout>
+  </appender>
+  <root>
+    <level value="ALL" />
+    <appender-ref ref="FileAppender" />
+  </root>
+</log4net>
+
+using log4net;
+using log4net.Config;
+
+class Program
+{
+    private static readonly ILog log = LogManager.GetLogger(typeof(Program));
+
+    static void Main()
+    {
+        // Load log4net configuration
+        XmlConfigurator.Configure(new System.IO.FileInfo("log4net.config"));
+
+        // Example usage of logging
+        log.Info("This is an informational message.");
+        log.Error("This is an error message.");
+
+        // Logs will be written to the specified log file
+    }
+}
 
 
 using System;
