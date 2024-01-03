@@ -1,4 +1,28 @@
-<?xml version="1.0" encoding="utf-8" ?>
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        // Sample date string in "yyyy-MM-dd HH:mm:ss" format
+        string dateString = "2023-12-08 15:30:45";
+
+        // Parse the date string to DateTime
+        if (DateTime.TryParseExact(dateString, "yyyy-MM-dd HH:mm:ss", null, System.Globalization.DateTimeStyles.None, out DateTime parsedDate))
+        {
+            // Decrease the time by 1 hour
+            DateTime newDate = parsedDate.AddHours(-1);
+
+            // Print the original and updated date
+            Console.WriteLine($"Original Date: {parsedDate:yyyy-MM-dd HH:mm:ss}");
+            Console.WriteLine($"Updated Date: {newDate:yyyy-MM-dd HH:mm:ss}");
+        }
+        else
+        {
+            Console.WriteLine("Invalid date format.");
+        }
+    }
+}<?xml version="1.0" encoding="utf-8" ?>
 <log4net>
   <appender name="FileAppender" type="log4net.Appender.FileAppender">
     <file value="log.txt" />
