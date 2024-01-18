@@ -1,3 +1,39 @@
+
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        Dictionary<string, string> replacementMap = new Dictionary<string, string>
+        {
+            { "mo", "tu" },
+            { "tu", "we" },
+            { "we", "th" },
+            { "th", "fr" },
+            { "fr", "sa" },
+            { "sa", "su" },
+            { "su", "mo" }
+        };
+
+        string originalString = "mo tu we th fr sa su";
+        string[] words = originalString.Split(' ');
+
+        for (int i = 0; i < words.Length; i++)
+        {
+            if (replacementMap.TryGetValue(words[i], out string replacement))
+            {
+                words[i] = replacement;
+            }
+        }
+
+        string replacedString = string.Join(" ", words);
+        Console.WriteLine(replacedString);
+    }
+}
+
+==
 using System;
 
 class Program
