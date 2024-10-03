@@ -1,3 +1,98 @@
+
+using Microsoft.AspNetCore.Http;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+
+namespace ProxyApi.Middleware
+{
+    public class ProxyMiddleware
+    {
+        private readonly RequestDelegate _next;
+        private readonly HttpClient _httpClient;
+
+        public ProxyMiddleware(RequestDelegate next, IHttpClientFactory httpClientFactory)
+        {
+            _next = next;
+            _httpClient = httpClientFactory.CreateClient();
+        }
+
+        public async Task InvokeAsync(HttpContext context)
+        {
+            // Check if the route exists within the current project
+            var endpoint = context.GetEndpoint();
+
+            // If no matching route is found, act as a proxy
+            if (endpoint == null)
+            {
+                await ForwardRequestToOriginalSource(context);
+            }
+            else
+            {
+                // If the route exists, continue with the next middleware
+                await _next(context);
+            }
+        }
+
+        private async Task ForwardRequestToOriginalSource(HttpContext context)
+        {
+            // Extract the original request path and query string
+            var originalRequestPath = context.Request.Path + context.Request.QueryString;
+            var destinationUrl = "https://originalsource.com" + originalRequestPath;
+
+            // Create the proxy request
+            var requestMessage = new HttpRequestMessage
+            {
+                RequestUri = new Uri(destinationUrl),
+                Method = new HttpMethod(context.Request.Method)
+            };
+
+            // Copy the headers from the original request
+            foreach (var header in context.Request.Headers)
+            {
+                if (!requestMessage.Headers.TryAddWithoutValidation(header.Key, (IEnumerable<string>)header.Value))
+                {
+                    requestMessage.Content?.Headers.TryAddWithoutValidation(header.Key, (IEnumerable<string>)header.Value);
+                }
+            }
+
+            // Add your custom headers here
+            requestMessage.Headers.Add("X-Custom-Header", "CustomHeaderValue");
+
+            // Copy the body content if necessary (POST, PUT, PATCH)
+            if (context.Request.ContentLength > 0)
+            {
+                var streamContent = new StreamContent(context.Request.Body);
+                requestMessage.Content = streamContent;
+                requestMessage.Content.Headers.ContentType = new MediaTypeHeaderValue(context.Request.ContentType);
+            }
+
+            // Send the request to the original source
+            var responseMessage = await _httpClient.SendAsync(requestMessage);
+
+            // Copy the response headers back to the context
+            foreach (var header in responseMessage.Headers)
+            {
+                context.Response.Headers[header.Key] = header.Value.ToArray();
+            }
+
+            foreach (var header in responseMessage.Content.Headers)
+            {
+                context.Response.Headers[header.Key] = header.Value.ToArray();
+            }
+
+            // Set the response status and content
+            context.Response.StatusCode = (int)responseMessage.StatusCode;
+            context.Response.ContentType = responseMessage.Content.Headers.ContentType?.ToString();
+            var content = await responseMessage.Content.ReadAsStringAsync();
+
+            await context.Response.WriteAsync(content);
+        }
+    }
+}
+
+
+
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using System.Threading.Tasks;
