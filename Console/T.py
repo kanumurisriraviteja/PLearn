@@ -1,4 +1,84 @@
+using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System.Net.Http.Headers;
 
+namespace ProxyApi.Controllers
+{
+    [Route("{**catchAll}")]
+    [ApiController]
+    public class ProxyController : ControllerBase
+    {
+        private readonly HttpClient _httpClient;
+
+        public ProxyController(IHttpClientFactory httpClientFactory)
+        {
+            _httpClient = httpClientFactory.CreateClient();
+        }
+
+        [HttpGet]
+        [HttpPost]
+        [HttpPut]
+        [HttpDelete]
+        [HttpPatch]
+        public async Task<IActionResult> HandleRequest()
+        {
+            // Extract the incoming request URL path
+            var originalRequestPath = HttpContext.Request.Path + HttpContext.Request.QueryString;
+            var destinationUrl = "https://originalsource.com" + originalRequestPath;
+
+            // Create the proxy request
+            var requestMessage = new HttpRequestMessage
+            {
+                RequestUri = new Uri(destinationUrl),
+                Method = new HttpMethod(HttpContext.Request.Method)
+            };
+
+            // Copy the headers from the incoming request
+            foreach (var header in HttpContext.Request.Headers)
+            {
+                if (!requestMessage.Headers.TryAddWithoutValidation(header.Key, (IEnumerable<string>)header.Value))
+                {
+                    requestMessage.Content?.Headers.TryAddWithoutValidation(header.Key, (IEnumerable<string>)header.Value);
+                }
+            }
+
+            // Add your custom headers here
+            requestMessage.Headers.Add("X-Custom-Header", "CustomHeaderValue");
+
+            // Copy the body content if it's a POST, PUT, or PATCH request
+            if (HttpContext.Request.ContentLength > 0)
+            {
+                var streamContent = new StreamContent(HttpContext.Request.Body);
+                requestMessage.Content = streamContent;
+                requestMessage.Content.Headers.ContentType = new MediaTypeHeaderValue(HttpContext.Request.ContentType);
+            }
+
+            // Send the request to the original source
+            var responseMessage = await _httpClient.SendAsync(requestMessage);
+
+            // Copy the response headers
+            foreach (var header in responseMessage.Headers)
+            {
+                Response.Headers[header.Key] = header.Value.ToArray();
+            }
+
+            foreach (var header in responseMessage.Content.Headers)
+            {
+                Response.Headers[header.Key] = header.Value.ToArray();
+            }
+
+            // Return the response from the original source
+            return new ContentResult
+            {
+                Content = await responseMessage.Content.ReadAsStringAsync(),
+                StatusCode = (int)responseMessage.StatusCode,
+                ContentType = responseMessage.Content.Headers.ContentType?.ToString()
+            };
+        }
+    }
+}
 using System;
 using System.Collections.Generic;
 
